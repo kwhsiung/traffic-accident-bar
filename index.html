@@ -50,7 +50,7 @@ svg {
 }
 body {
   /*font-family: "Helvetica","Open Sans", "Hiragino Sans GB", "Source Sans Pro", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", sans-serif;*/
-  font-family: 'xingothic-tc';
+  /*font-family: 'xingothic-tc';*/
   margin: 0;
   padding: 5px;
   color: #888;
@@ -58,8 +58,11 @@ body {
 p {
   font-size: 20px;
 }
+
 h1 {
+  /*font-family: 'xingothic-tc';*/
   /*text-align: center;*/
+  font-size: 40px;
   padding-left: 10px;
   margin-bottom: 2px;
   color: #333;
@@ -68,6 +71,7 @@ h1 {
   border-bottom: solid 1px #CCC;
 }
 .source {
+  /*font-family: 'xingothic-tc';*/
   text-align: center;
   padding-left: 10px;
 }
@@ -77,14 +81,14 @@ h1 {
 </style>
 <body>
   <title>臺北市取消「禁行機車」路段近五年交通事故件數比較</title>
-  <h1 style="text-align: center;">臺北市取消「禁行機車」路段近五年交通事故件數比較</h1>
-  <div class="source">
-  2016 年上半年，臺北市交通局交工處表示，現已開放部分路段外側第 3 車道供機車行駛，未來仍將因地置宜審慎檢討機車行駛路權，俾提供機車騎士合理及安全的騎乘空間。
+  <h1 class="xingothic-tc-w7" style="text-align: center;">臺北市取消「禁行機車」路段近五年交通事故件數比較</h1>
+  <div class="source xingothic-tc-w3">
+  <a>2016 年上半年，臺北市交通局交工處表示，現已開放部分路段外側第 3 車道供機車行駛，未來仍將因地置宜審慎檢討機車行駛路權，俾提供機車騎士合理及安全的騎乘空間。</a>
   </div>
-  <div class="source">
-  本頁面所呈現之資料，是經過去除該路段資料中地址欄位包含「巷」後的資料。
+  <div class="source xingothic-tc-w3">
+  <a>本頁面所呈現之資料，是經過去除該路段資料中地址欄位包含「巷」後的資料。</a>
   </div>
-  <div class="source">
+  <div class="source xingothic-tc-w3">
   資料來源：<a href="http://data.gov.tw/node/12197" target="_blank">歷史交通事故資料</a>、
   <a href="http://data.gov.tw/node/12818" target="_blank">即時交通事故資料(A1類)</a>、
   <a href="http://data.gov.tw/node/12197" target="_blank">即時交通事故資料(A2類)</a>、
@@ -97,10 +101,10 @@ h1 {
     <div class="col-8">
       <div class="row">
         <div class="col-6">
-          <p style="text-align: right; vertical-align: bottom; color: #c13037;"><b>機車</b></p>
+          <p class="xingothic-tc-w7" style="text-align: right; vertical-align: bottom; color: #c13037;"><b>機車</b></p>
         </div>
         <div class="col-6">
-          <p style="text-align: left; color: #2070ba;"><b>小客車</b></p>
+          <p class="xingothic-tc-w7" style="text-align: left; color: #2070ba;"><b>小客車</b></p>
         </div>
       </div>
     </div>
@@ -202,6 +206,7 @@ h1 {
         x2 = d3.scale.linear().domain([0, max_total]).range([w, 0]);
 
     road_name.append("h1")
+    .attr("class", "xingothic-tc-w5")
     .text(road_chinese_name);
 
     var vis = chart
