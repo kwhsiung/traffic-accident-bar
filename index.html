@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="http://bl.ocks.org/kwhsiung/raw/f433e83edcb1f210bbc1cf9801539b09/">
+  <meta property="og:title" content="臺北市取消「禁行機車」路段近五年交通事故件數比較" />
+  <meta property="og:site_name" content="bl.ocks.org" />
+  <meta property="og:image" content="https://gist.githubusercontent.com/kwhsiung/f433e83edcb1f210bbc1cf9801539b09/raw/0b2d5d22ad0526e7f36eb5f62142e0dc147b908d/preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="900" />
+  <meta property="article:author" content="https://www.facebook.com/kevin.bear.530" />
+
+  <script type="text/javascript" src="jf-production-ver.js"></script>
+</head>
+<style type="text/css">
+/* CSS Grid View*/
+* {
+    box-sizing: border-box;
+}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+    /*border: 1px solid red;*/
+}
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+svg {
+  position: relative;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  shape-rendering: crispEdges;
+}
+body {
+  /*font-family: "Helvetica","Open Sans", "Hiragino Sans GB", "Source Sans Pro", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", sans-serif;*/
+  font-family: 'xingothic-tc';
+  margin: 0;
+  padding: 5px;
+  color: #888;
+}
+p {
+  font-size: 20px;
+}
+h1 {
+  /*text-align: center;*/
+  padding-left: 10px;
+  margin-bottom: 2px;
+  color: #333;
+}
+#label {
+  border-bottom: solid 1px #CCC;
+}
+.source {
+  text-align: center;
+  padding-left: 10px;
+}
+.source a, .source a:hover {
+  color: #888;
+}
+</style>
+<body>
+  <title>臺北市取消「禁行機車」路段近五年交通事故件數比較</title>
+  <h1 style="text-align: center;">臺北市取消「禁行機車」路段近五年交通事故件數比較</h1>
+  <div class="source">
+  2016 年上半年，臺北市交通局交工處表示，現已開放部分路段外側第 3 車道供機車行駛，未來仍將因地置宜審慎檢討機車行駛路權，俾提供機車騎士合理及安全的騎乘空間。
+  </div>
+  <div class="source">
+  本頁面所呈現之資料，是經過去除該路段資料中地址欄位包含「巷」後的資料。
+  </div>
+  <div class="source">
+  資料來源：<a href="http://data.gov.tw/node/12197" target="_blank">歷史交通事故資料</a>、
+  <a href="http://data.gov.tw/node/12818" target="_blank">即時交通事故資料(A1類)</a>、
+  <a href="http://data.gov.tw/node/12197" target="_blank">即時交通事故資料(A2類)</a>、
+  <a href="https://www.facebook.com/tpedot/photos/a.173527946127993.1073741825.170520926428695/614622755351841/?type=3&theater" target="_blank">取消「禁行機車」路段表</a>
+  </div>
+
+  <div class="row" id="label">
+    <div class="col-4">
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <div class="col-6">
+          <p style="text-align: right; vertical-align: bottom; color: #c13037;"><b>機車</b></p>
+        </div>
+        <div class="col-6">
+          <p style="text-align: left; color: #2070ba;"><b>小客車</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="//d3js.org/d3.v3.min.js"></script>
+  <script src="//d3js.org/queue.v1.min.js"></script>
+  <script type="text/javascript">
+  var roads = [
+    {englishName: "AiguoE.Rd", chineseName: "愛國東路"},
+    {englishName: "BadeRdSec3", chineseName: "八德路三段"},
+    {englishName: "BadeRdSec4", chineseName: "八德路四段"},
+    {englishName: "BaoqingRd", chineseName: "寶慶路"},
+    {englishName: "ChengdeBridge", chineseName: "承德橋"},
+    {englishName: "ChengdeRdSec1", chineseName: "承德路一段"},
+    {englishName: "ChengdeRdSec2", chineseName: "承德路二段"},
+    {englishName: "ChengdeRdSec3", chineseName: "承德路三段"},
+    {englishName: "ChengdeRdSec4", chineseName: "承德路四段"},
+    {englishName: "GongyuanRd", chineseName: "公園路"},
+    {englishName: "GuangfuS.Rd", chineseName: "光復南路"},
+    {englishName: "HangzhouS.RdSec2", chineseName: "杭州南路二段"},
+    {englishName: "HepingE.RdSec1", chineseName: "和平東路一段"},
+    {englishName: "HepingE.RdSec2", chineseName: "和平東路二段"},
+    {englishName: "HepingE.RdSec3", chineseName: "和平東路三段"},
+    {englishName: "JianguoN.RdSec3", chineseName: "建國北路三段"},
+    {englishName: "JiankangRd", chineseName: "健康路"},
+    {englishName: "KeelungRdSec1", chineseName: "基隆路一段"},
+    {englishName: "KeelungRdSec3", chineseName: "基隆路三段"},
+    {englishName: "LixianRd", chineseName: "立賢路"},
+    {englishName: "MinquanE.RdSec1", chineseName: "民權東路一段"},
+    {englishName: "MinquanW.Rd", chineseName: "民權西路"},
+    {englishName: "MinzuE.Rd", chineseName: "民族東路"},
+    {englishName: "NanjingE.Rd", chineseName: "南京東路"},
+    {englishName: "NanjingW.Rd", chineseName: "南京西路"},
+    {englishName: "NeihuRdSec1", chineseName: "內湖路一段"},
+    {englishName: "RooseveltRdSec5", chineseName: "羅斯福路五段"},
+    {englishName: "RooseveltRdSec6", chineseName: "羅斯福路六段"},
+    {englishName: "TayouRd", chineseName: "塔悠路"},
+    {englishName: "XinglongRdSec4", chineseName: "興隆路四段"},
+    {englishName: "XiyuanRdSec2", chineseName: "西園路二段"},
+    {englishName: "YixianRd", chineseName: "逸仙路"},
+    {englishName: "ZhishanRdSec1", chineseName: "至善路一段"},
+    {englishName: "ZhonghuaRdSec1", chineseName: "中華路一段"},
+    {englishName: "ZhongshanBridge", chineseName: "中山橋"},
+    {englishName: "ZhongxiaoE.RdSec3", chineseName: "忠孝東路三段"},
+    {englishName: "ZhongxiaoE.RdSec5", chineseName: "忠孝東路五段"},
+    {englishName: "ZhongxiaoE.RdSec6", chineseName: "忠孝東路六段"},
+    {englishName: "ZhongzhengRd", chineseName: "中正路"}
+  ];
+
+  // Using d3 queue for csv data loading, prevent messing up the order of roads.
+  var queue = queue();
+  for(var i = 0; i < roads.length; i += 1) {
+    queue = queue.defer(d3.csv, "data/" + roads[i].englishName + ".csv");
+  }
+  queue.await(function() {
+    for(var i = 0; i <= roads.length; i += 1) {
+      // Deliver the road's chinese name for appending.
+      // The first element of arguments is error, we don't want to using that.
+      visulaize(roads[i].chineseName, arguments[i + 1]);
+    }
+  });
+
+  function visulaize(road_chinese_name, data) {
+    var content = d3.select("body")
+    .append("div")
+    .attr("class", "row");
+
+    var road_name = content.append("div")
+    .attr("class", "col-4")
+    .style("text-align", "right");
+
+    var chart = content.append("div")
+    .attr("class", "col-8");
+
+    var car_accident = data.filter(function(d) { return d.car_type.includes("小客車"); });
+    // car_accident = car_accident.filter(function(d) { return d.accident_type === "A1" });
+    car_accident = d3.nest()
+    .key(function(d) { return d.accident_time.slice(0, 4); }) // The key is year of the accident_time in data.
+    .rollup(function(d) { return d.length })
+    .entries(car_accident);
+
+    var moto_accident = data.filter(function(d) { return d.car_type.includes("機車"); });
+    // moto_accident = moto_accident.filter(function(d) { return d.accident_type === "A1" });
+    moto_accident = d3.nest()
+    .key(function(d) { return d.accident_time.slice(0, 4); }) // The key is year of the accident_time in data.
+    .rollup(function(d) { return d.length })
+    .entries(data);
+
+    var max_car   = d3.max(car_accident, function(d) { return d.values; }),
+        max_moto  = d3.max(moto_accident, function(d) { return d.values; }),
+        max_total = Math.max(max_car, max_moto);
+
+    var w = 250,
+        h = 5 * 20,
+        bins = d3.range(5).map(function(d) { return d + 2012; }),
+        y = d3.scale.ordinal().domain(bins).rangeBands([0, h], 0.25),
+        x1 = d3.scale.linear().domain([0, max_total]).range([0, w]),
+        x2 = d3.scale.linear().domain([0, max_total]).range([w, 0]);
+
+    road_name.append("h1")
+    .text(road_chinese_name);
+
+    var vis = chart
+    .append("svg")
+      .attr("width", 2*w + 40)
+      .attr("height", h + 40)
+    .append("g")
+      .attr("transform", "translate(5,0)");
+
+    // pyramid bar chart
+    vis.append("g")
+    .selectAll("text.years")
+      .data(bins)
+      .enter()
+    .append("text")
+      .attr("class", "years")
+      .attr("x", w + 15)
+      .attr("y", function(d) { return y(d) + y.rangeBand() - 2; })
+      .attr("fill", "#888")
+      .attr("text-anchor", "middle")
+      .attr("font-size", "12px")
+      .text(function(d) { return d; });
+
+    var rTransform = function(d,i) {
+        return "translate(" + (w + 30) + "," + y(d.key).toFixed(2) + ")";
+    }
+    var lTransform = function(d,i) {
+        return "translate(" + x2(d.values).toFixed(2) + "," + y(d.key).toFixed(2) + ")";
+    }
+
+    var car_bars = vis.selectAll("rect.car")
+      .data(car_accident)
+    .enter()
+    .append("rect")
+      .attr("id", function(d) { return "car" + (d.key); })
+      .attr("class", "car")
+      .attr("fill", function(d) {
+        if(d.key === "2016") {
+          return "#2070ba";
+        } else {
+          return "#a5c5e3"
+        }
+      })
+      .attr("transform", rTransform)
+      .attr("width", function(d) { return x1(d.values); })
+      .attr("height", y.rangeBand())
+      .attr("y", 0)
+      .attr("opacity", 1);
+
+    vis.append("g")
+    .selectAll("text.car_count")
+      .data(car_accident)
+      .enter()
+    .append("text")
+      .attr("class", "car_count")
+      .attr("x", function(d) { return w + 30 + x1(d.values) - 11; })
+      .attr("y", function(d, i) { return y(d.key) + y.rangeBand() - 2; })
+      .attr("fill", "white")
+      .attr("text-anchor", "middle")
+      .attr("font-size", "12px")
+      .text(function(d) { return d.values; });
+
+    var moto_bars = vis.selectAll("rect.moto")
+      .data(moto_accident)
+      .enter()
+    .append("rect")
+      .attr("id", function(d) { return "moto" + (d.key); })
+      .attr("class", "moto")
+      .attr("fill", function(d) {
+        if(d.key === "2016") {
+          return "#c13037";
+        } else {
+          return "#e6acaf"
+        }
+      })
+      .attr("opacity", 1)
+      .attr("transform", lTransform)
+      .attr("width", function(d) { return x1(d.values); })
+      .attr("height", y.rangeBand())
+      .attr("y", 0)
+      .attr("opacity", 1);
+
+    vis.append("g")
+    .selectAll("text.moto_count")
+      .data(moto_accident)
+      .enter()
+    .append("svg:text")
+      .attr("class", "moto_count")
+      .attr("x", function(d) { return x2(d.values) + 11; })
+      .attr("y", function(d, i) { return y(d.key) + y.rangeBand() - 2; })
+      .attr("fill", "white")
+      .attr("text-anchor", "middle")
+      .attr("font-size", "12px")
+      .text(function(d) { return d.values; });
+  }
+</script>
