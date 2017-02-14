@@ -81,7 +81,7 @@ h1 {
 </style>
 <body>
   <title>臺北市取消「禁行機車」路段近五年交通事故件數比較</title>
-  <h1 class="xingothic-tc-w7" style="text-align: center;">臺北市取消「禁行機車」路段近五年交通事故件數比較</h1>
+  <h1 class="jf-jinxuan-medium" style="text-align: center;">臺北市取消「禁行機車」路段近五年交通事故件數比較</h1>
   <div class="source xingothic-tc-w3">
   <a>2016 年上半年，臺北市交通局交工處表示，現已開放部分路段外側第 3 車道供機車行駛，未來仍將因地置宜審慎檢討機車行駛路權，俾提供機車騎士合理及安全的騎乘空間。</a>
   </div>
@@ -161,7 +161,7 @@ h1 {
     queue = queue.defer(d3.csv, "data/" + roads[i].englishName + ".csv");
   }
   queue.await(function() {
-    for(var i = 0; i <= roads.length; i += 1) {
+    for(var i = 0; i < roads.length; i += 1) {
       // Deliver the road's chinese name for appending.
       // The first element of arguments is error, we don't want to using that.
       visulaize(roads[i].chineseName, arguments[i + 1]);
