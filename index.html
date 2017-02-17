@@ -93,7 +93,7 @@ p {
   <a>2016 年上半年，臺北市交通局交工處表示，現已開放部分路段外側第 3 車道供機車行駛，未來仍將因地置宜審慎檢討機車行駛路權，俾提供機車騎士合理及安全的騎乘空間。</a>
   </div>
   <div class="source">
-  <a>本頁面所呈現之資料，是經過去除該路段資料中地址欄位包含「巷」後的資料。</a>
+  <a>本頁面所呈現之資料，已過濾發生在該路段所屬巷弄中的交通事故，使數據更貼近只發生在大馬路上的交通事故件數。</a>
   </div>
   <div class="source">
   資料來源：<a href="http://data.gov.tw/node/12197" target="_blank">歷史交通事故資料</a>、
@@ -269,7 +269,13 @@ p {
       .enter()
     .append("text")
       .attr("class", "car_count")
-      .attr("x", function(d) { return w + 30 + x1(d.values) - 11; })
+      .attr("x", function(d) {
+        if((w + 30 + x1(d.values) - 13) > 274.8125) {
+          return w + 30 + x1(d.values) - 11;
+        } else {
+          return w + 30 + x1(d.values) - 3;
+        }
+      })
       .attr("y", function(d, i) { return y(d.key) + y.rangeBand() - 2; })
       .attr("fill", "white")
       .attr("text-anchor", "middle")
